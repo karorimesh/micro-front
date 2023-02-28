@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="customer-service">
+        <createTable tableName="CUSTOMER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CUSTOMER"/>
+            </column>
+            <column name="FULL_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(50)"/>
+            <column name="ID_NUMBER" type="VARCHAR(50)"/>
+            <column name="KRA_PIN" type="VARCHAR(50)"/>
+            <column name="ACTIVE" type="BOOLEAN"/>
+            <column name="APPROVED" type="BOOLEAN"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="customer-service">
+        <createTable tableName="GUARANTORS">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_GUARANTORS"/>
+            </column>
+            <column name="FULL_NAME" type="VARCHAR(100)"/>
+            <column name="ID_NUMBER" type="VARCHAR(50)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="LOAN_ID" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="customer-service">
+        <createTable tableName="LOAN">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LOAN"/>
+            </column>
+            <column name="CUSTOMER_ID" type="UUID"/>
+            <column name="AMOUNT" type="DOUBLE"/>
+            <column name="PAY_DATE" type="DATETIME"/>
+            <column name="INTEREST_RATE" type="DOUBLE"/>
+            <column name="STATUS" type="VARCHAR(50)"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="customer-service">
+        <createIndex indexName="IDX_GUARANTORS_LOAN" tableName="GUARANTORS">
+            <column name="LOAN_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="LOAN_ID" baseTableName="GUARANTORS"
+                                 constraintName="FK_GUARANTORS_ON_LOAN" referencedColumnNames="ID"
+                                 referencedTableName="LOAN"/>
+    </changeSet>
+    <changeSet id="5" author="customer-service">
+        <createIndex indexName="IDX_LOAN_CUSTOMER" tableName="LOAN">
+            <column name="CUSTOMER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CUSTOMER_ID" baseTableName="LOAN" constraintName="FK_LOAN_ON_CUSTOMER"
+                                 referencedColumnNames="ID" referencedTableName="CUSTOMER"/>
+    </changeSet>
+</databaseChangeLog>
