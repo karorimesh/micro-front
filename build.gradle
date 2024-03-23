@@ -24,13 +24,13 @@ repositories {
     maven {
         url 'https://global.repo.jmix.io/repository/public'
     }
-    maven {
-        url = 'https://global.repo.jmix.io/repository/premium'
-        credentials {
-            username = rootProject['premiumRepoUser']
-            password = rootProject['premiumRepoPass']
-        }
-    }
+//    maven {
+//        url = 'https://global.repo.jmix.io/repository/premium'
+//        credentials {
+//            username = rootProject['premiumRepoUser']
+//            password = rootProject['premiumRepoPass']
+//        }
+//    }
     maven { url 'https://repo.spring.io/release/' }
     maven { url "https://repo.spring.io/libs-snapshot-local" }
     maven { url "https://repo.spring.io/libs-milestone-local" }
@@ -64,13 +64,12 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     implementation 'org.postgresql:postgresql'
-    implementation 'io.jmix.bpm:jmix-bpm-ui-starter'
-    implementation 'io.jmix.bpm:jmix-bpm-starter'
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly 'org.projectlombok:lombok:1.18.26'
 
+    implementation 'org.postgresql:postgresql'
 }
 
 test {
